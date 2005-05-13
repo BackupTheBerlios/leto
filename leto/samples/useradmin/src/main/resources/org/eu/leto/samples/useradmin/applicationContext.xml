@@ -14,7 +14,7 @@
       <constructor-arg index="0">
         <value>/org/eu/leto/samples/useradmin/splash.png</value>
       </constructor-arg>
-      <constructor-arg index="1"><value>5</value></constructor-arg>
+      <constructor-arg index="1"><value>2</value></constructor-arg>
     </bean>
   </list>
 </property>
@@ -34,6 +34,12 @@
 
 <bean id="mainFrame" class="org.eu.leto.samples.useradmin.MainFrame">
 <constructor-arg index="0"><ref local="application"/></constructor-arg>
+</bean>
+
+
+<bean id="imageCache" class="org.eu.leto.core.application.ApplicationImageCache">
+<constructor-arg index="0"><ref local="application"/></constructor-arg>
+<constructor-arg index="1"><value>/org/eu/leto/samples/useradmin/</value></constructor-arg>
 </bean>
 
 </beans>
