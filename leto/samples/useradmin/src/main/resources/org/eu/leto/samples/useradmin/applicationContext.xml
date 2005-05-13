@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+    $Id$
+-->
+<beans default-lazy-init="true">
+
+<bean id="application" class="org.eu.leto.samples.useradmin.UserAdminApplication">
+<property name="applicationConfigurers">
+  <list>
+    <bean class="org.eu.leto.swing.JGoodiesApplicationConfigurer"/>
+    <bean class="org.eu.leto.swing.SplashScreenApplicationConfigurer">
+      <constructor-arg index="0">
+        <value>/org/eu/leto/samples/useradmin/splash.png</value>
+      </constructor-arg>
+      <constructor-arg index="1"><value>5</value></constructor-arg>
+    </bean>
+  </list>
+</property>
+</bean>
+
+
+<bean id="messageSource"
+  class="org.springframework.context.support.ResourceBundleMessageSource">
+<property name="basenames">
+  <list>
+    <value>org.eu.leto.core.resources</value>
+    <value>org.eu.leto.samples.useradmin.resources</value>
+  </list>
+</property>
+</bean>
+
+
+<bean id="mainFrame" class="org.eu.leto.samples.useradmin.MainFrame">
+<constructor-arg index="0"><ref local="application"/></constructor-arg>
+</bean>
+
+</beans>
+

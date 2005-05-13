@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Id$
+-->
+<project>
+  <extend>${basedir}/../../project.xml</extend>
+  <pomVersion>3</pomVersion>
+  <id>useradmin</id>
+  <name>User administration</name>
+
+  <package>org.eu.leto.samples.useradmin</package>
+
+  <dependencies>
+    <dependency>
+      <groupId>leto</groupId>
+      <artifactId>leto-core</artifactId>
+      <version>SNAPSHOT</version>
+      <url>http://leto.eu.org</url>
+    </dependency>
+    <dependency>
+      <groupId>leto</groupId>
+      <artifactId>leto-realm</artifactId>
+      <version>SNAPSHOT</version>
+      <url>http://leto.eu.org</url>
+    </dependency>
+    <dependency>
+      <groupId>leto</groupId>
+      <artifactId>leto-swing</artifactId>
+      <version>SNAPSHOT</version>
+      <url>http://leto.eu.org</url>
+    </dependency>
+  </dependencies>
+</project>
+
