@@ -19,6 +19,25 @@ public class User extends AbstractAuditableModelObject {
     private String displayName;
 
 
+    public User() {
+        super();
+    }
+
+
+    public User(final String login, final String password,
+            final String displayName) {
+        this();
+        setLogin(login);
+        setPassword(password);
+        setDisplayName(displayName);
+    }
+
+
+    public User(final String login, final String password) {
+        this(login, password, null);
+    }
+
+
     @Id
     public Long getUserId() {
         return userId;
