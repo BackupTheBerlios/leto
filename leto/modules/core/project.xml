@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Id$
+-->
+<project>
+  <extend>${basedir}/../../project.xml</extend>
+  <pomVersion>3</pomVersion>
+  <id>leto-core</id>
+  <name>Leto core</name>
+
+  <package>org.eu.leto.core</package>
+</project>
+
