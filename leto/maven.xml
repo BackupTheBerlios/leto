@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Id: maven.xml,v 1.1 2005/05/13 11:17:57 romale Exp $
+-->
+<project xmlns:j="jelly:core" xmlns:util="jelly:util"
+  xmlns:ant="jelly:ant" default="run">
+
+
+<!-- we set a ${rootdir} variable in order to specify resources against
+the root directory -->
+
+<j:set var="rootdir">${basedir}</j:set>
+
+<j:while test="${true}">
+  <util:available file="${rootdir}/LICENSE.txt">
+    <j:break/>
+  </util:available>
+  <j:set var="rootdir">${rootdir}/..</j:set>
+</j:while>
+
+<ant:dirname property="rootdirname" file="${rootdir}/project.xml"/>
+<j:set var="rootdir">${rootdirname}</j:set>
+<echo>Using root dir: ${rootdir}</echo>
+
+
+<postGoal name="clean:clean">
+  <delete>
+    <fileset dir="${basedir}">
+      <include name="project.xml.md5"/>
+      <include name="*snapshot-version"/>
+      <include name="bin"/>
+      <include name=".classpath"/>
+      <include name=".project"/>
+      <include name="**/jcoverage.ser"/>
+      <include name="build.xml"/>
+      <include name="**/*.*~"/>
+      <include name="**/*.log*"/>
+      <include name="**/*.class*"/>
+      <include name="javadoc*"/>
+    </fileset>
+  </delete>
+</postGoal>
+
+
+<preGoal name="dist:build-src">
+  <fileset dir="${basedir}" id="dist.src.files">
+    <exclude name="**/.classpath"/>
+    <exclude name="**/.project"/>
+    <exclude name="**/target/**"/>
+    <exclude name="**/*.swp"/>
+    <exclude name="**/*.swo"/>
+    <exclude name="**/*.log*"/>
+    <exclude name="**/jcoverage.ser"/>
+    <exclude name="**/junit*.properties"/>
+    <exclude name="**/project.xml.md5"/>
+    <exclude name="**/*snapshot-version"/>
+    <exclude name="**/cruisecontrol.xml"/>
+    <exclude name="**/cruisecontrol.txt"/>
+    <exclude name="**/${maven.final.name}.ser"/>
+  </fileset>
+
+  <property name="maven.dist.src.archive.dir" value="${maven.src.dir}"/>
+  <copy todir="${maven.dist.src.archive.dir}/${maven.final.name}">
+    <fileset refid="dist.src.files"/>
+  </copy>
+</preGoal>
+
+
+<goal name="java:generate-jdbc-properties">
+  <propertyfile file="${maven.build.dest}/jdbc.properties" comment="JDBC properties">
+    <entry key="jdbc.driver" value="${jdbc.driver}"/>
+    <entry key="jdbc.url" value="${jdbc.url}"/>
+    <entry key="jdbc.username" value="${jdbc.username}"/>
+    <entry key="jdbc.password" value="${jdbc.password}"/>
+    <entry key="jdbc.hibernate.dialect" value="${jdbc.hibernate.dialect}"/>
+    <entry key="jdbc.hibernate.showSQL" value="${jdbc.hibernate.showSQL}"/>
+    <entry key="jdbc.hibernate.hbm2ddl" value="${jdbc.hibernate.hbm2ddl}"/>
+    <entry key="jdbc.hibernate.batchSize" value="${jdbc.hibernate.batchSize}"/>
+  </propertyfile>
+</goal>
+
+
+<postGoal name="java:jar-resources">
+  <copy todir="${maven.build.dest}">
+    <fileset dir="${rootdir}/src/conf">
+      <include name="**/*"/>
+      </fileset>
+  </copy>
+</postGoal>
+
+
+<preGoal name="test:test-resources">
+  <propertyfile file="${maven.test.dest}/test.properties" comment="Test properties">
+    <entry key="jdbc.driver" value="${test.jdbc.driver}"/>
+    <entry key="jdbc.url" value="${test.jdbc.url}"/>
+    <entry key="jdbc.username" value="${test.jdbc.username}"/>
+    <entry key="jdbc.password" value="${test.jdbc.password}"/>
+    <entry key="jdbc.hibernate.dialect" value="${test.jdbc.hibernate.dialect}"/>
+    <entry key="jdbc.hibernate.showSQL" value="${test.jdbc.hibernate.showSQL}"/>
+    <entry key="jdbc.hibernate.hbm2ddl" value="${test.jdbc.hibernate.hbm2ddl}"/>
+    <entry key="jdbc.hibernate.batchSize" value="${test.jdbc.hibernate.batchSize}"/>
+  </propertyfile>
+  <util:available file="${maven.src.dir}/test/resources">
+    <copy todir="${maven.test.dest}">
+      <fileset dir="${maven.src.dir}/test/resources">
+        <include name="**/*"/>
+      </fileset>
+    </copy>
+  </util:available>
+  <copy todir="${maven.test.dest}">
+    <fileset dir="${rootdir}/src/test/resources">
+      <include name="**/*"/>
+    </fileset>
+  </copy>
+</preGoal>
+
+
+<preGoal name="jar:jar">
+  <copy tofile="${maven.build.dir}/${pom.artifactId}.manifest">
+    <fileset file="${rootdir}/jar.manifest"/>
+    <filterset begintoken="@" endtoken="@">
+      <filter token="specification.title" value="${pom.name}"/>
+      <filter token="specification.version" value="${pom.currentVersion}"/>
+      <filter token="specification.vendor" value="${pom.organization.name}"/>
+      <filter token="implementation.title" value="${pom.name}"/>
+      <filter token="implementation.version" value="${pom.currentVersion}"/>
+      <filter token="implementation.vendor" value="${pom.organization.name}"/>
+    </filterset>
+  </copy>
+  <copy todir="${maven.build.dest}/META-INF">
+    <fileset file="${rootdir}/NOTICE.txt"/>
+  </copy>
+  <delete>
+    <fileset dir="${maven.build.dest}">
+      <include name="emma.properties"/>
+    </fileset>
+  </delete>
+</preGoal>
+
+
+<goal name="default" description="default goal">
+  <attainGoal name="jar"/>
+</goal>
+
+
+<goal name="statcvs:setup" description="install StatCVS plugin">
+  <j:set var="artifactId" value="maven-statcvs-plugin"/>
+  <j:set var="groupId" value="statcvs"/>
+  <j:set var="version" value="2.6"/>
+  <attainGoal name="plugin:download"/>
+</goal>
+
+
+<goal name="run" prereqs="java:jar-resources,java:compile" description="run the project">
+  <path id="cp">
+    <pathelement location="${maven.build.dest}"/>
+    <path refid="maven.dependency.classpath"/>
+  </path>
+  <java classname="${maven.jar.mainclass}" classpathref="cp" fork="true"/>
+</goal>
+
+
+<goal name="emma:setup" description="install EMMA plugin">
+  <j:set var="artifactId" value="maven-emma-plugin"/>
+  <j:set var="groupId" value="emma"/>
+  <j:set var="version" value="0.4"/>
+  <attainGoal name="plugin:download"/>
+</goal>
+
+
+<!-- EMMA goals are taken from:
+     http://svn.apache.org/viewcvs.cgi/directory/network/trunk/maven.xml?rev=165103&view=markup -->
+
+<goal name="emma:backup-main">
+  <ant:copy todir="${maven.build.dest}.orig">
+    <ant:fileset dir="${maven.build.dest}"/>
+  </ant:copy>
+</goal>
+
+<goal name="emma:backup-test">
+  <ant:copy todir="${maven.test.dest}.orig">
+    <ant:fileset dir="${maven.test.dest}"/>
+  </ant:copy>
+</goal>
+
+
+<goal name="emma:restore-main">
+  <ant:delete dir="${maven.build.dest}.emma"/>
+  <ant:move todir="${maven.build.dest}.emma">
+    <ant:fileset dir="${maven.build.dest}" />
+  </ant:move>
+  <ant:move todir="${maven.build.dest}">
+    <ant:fileset dir="${maven.build.dest}.orig"/>
+  </ant:move>
+</goal>
+
+
+<goal name="emma:restore-test">
+  <ant:delete dir="${maven.test.dest}.emma"/>
+  <ant:move todir="${maven.test.dest}.emma">
+    <ant:fileset dir="${maven.test.dest}" />
+  </ant:move>
+  <ant:move todir="${maven.test.dest}">
+    <ant:fileset dir="${maven.test.dest}.orig"/>
+  </ant:move>
+</goal>
+
+
+<preGoal name="emma:replace-product-classes">
+  <j:set var="maven.emma.inreport" value="${context.getVariable('maven.emma.inreport')}"/>
+  <j:if test="${context.getVariable('maven.emma.inreport') != 'true'}">
+    <attainGoal name="emma:backup-main"/>
+  </j:if>
+</preGoal>
+
+
+<postGoal name="emma:replace-product-classes">
+  <j:set var="maven.emma.inreport" value="${context.getVariable('maven.emma.inreport')}"/>
+  <j:if test="${context.getVariable('maven.emma.inreport') != 'true'}">
+    <attainGoal name="emma:restore-main"/>
+  </j:if>
+</postGoal>
+
+
+<preGoal name="emma:replace-testing-classes">
+  <j:set var="maven.emma.inreport" value="${context.getVariable('maven.emma.inreport')}"/>
+  <j:if test="${context.getVariable('maven.emma.inreport') != 'true'}">
+    <attainGoal name="emma:backup-test"/>
+  </j:if>
+</preGoal>
+
+
+<postGoal name="emma:replace-testing-classes">
+  <j:set var="maven.emma.inreport" value="${context.getVariable('maven.emma.inreport')}"/>
+  <j:if test="${context.getVariable('maven.emma.inreport') != 'true'}">
+    <attainGoal name="emma:restore-test"/>
+  </j:if>
+</postGoal>
+
+
+<preGoal name="emma:realreport">
+  <attainGoal name="test:compile"/>
+  <attainGoal name="emma:backup-main"/>
+  <attainGoal name="emma:backup-test"/>
+  <echo>Turning on EMMA for report generation.</echo>
+  <j:set var="maven.emma.inreport" value="true"/>
+  <attainGoal name="emma:test-with-forced-fork"/>
+</preGoal>
+
+
+<postGoal name="emma:realreport">
+  <j:set var="maven.emma.inreport" value="false"/>
+  <echo>Turning off EMMA.</echo>
+  <attainGoal name="emma:restore-main"/>
+  <attainGoal name="emma:restore-test"/>
+</postGoal>
+
+</project>
