@@ -32,9 +32,8 @@ public class ApplicationMessageHelper {
     public boolean showConfirmationMessage(Component parent, String msgKey,
             String titleKey, Object... args) {
         return JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(parent,
-                application.getMessageRegister().getMessage(msgKey, args),
-                application.getMessageRegister().getMessage(titleKey),
-                JOptionPane.YES_NO_OPTION);
+                application.getMessage(msgKey, args), application
+                        .getMessage(titleKey), JOptionPane.YES_NO_OPTION);
     }
 
 
@@ -44,8 +43,7 @@ public class ApplicationMessageHelper {
         stackTraceElementList.add(0, e.toString());
 
         final StringBuffer message = new StringBuffer();
-        message.append(application.getMessageRegister()
-                .getMessage(msgKey, args));
+        message.append(application.getMessage(msgKey, args));
 
         Throwable cause = e.getCause();
         for (int i = 0; (i < 5) && (cause != null); ++i) {
@@ -59,8 +57,7 @@ public class ApplicationMessageHelper {
                 final String msgKey2 = appExc.getKey();
                 final Object[] args2 = appExc.getArguments();
                 message.append("\n").append(
-                        application.getMessageRegister().getMessage(msgKey2,
-                                args2));
+                        application.getMessage(msgKey2, args2));
             }
 
             cause = cause.getCause();
@@ -83,16 +80,15 @@ public class ApplicationMessageHelper {
         panel.add(text, BorderLayout.NORTH);
 
         JOptionPane.showMessageDialog(parent, panel, application
-                .getMessageRegister().getMessage(titleKey),
-                JOptionPane.ERROR_MESSAGE);
+                .getMessage(titleKey), JOptionPane.ERROR_MESSAGE);
     }
 
 
     public void showInformationMessage(Component parent, String msgKey,
             String titleKey, Object... args) {
-        JOptionPane.showMessageDialog(parent, application.getMessageRegister()
-                .getMessage(msgKey, args), application.getMessageRegister()
-                .getMessage(titleKey), JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(parent, application.getMessage(msgKey,
+                args), application.getMessage(titleKey),
+                JOptionPane.INFORMATION_MESSAGE);
     }
 
 
