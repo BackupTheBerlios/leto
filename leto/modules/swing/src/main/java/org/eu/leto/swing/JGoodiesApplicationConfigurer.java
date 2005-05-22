@@ -46,8 +46,8 @@ public class JGoodiesApplicationConfigurer extends ApplicationConfigurerAdapter 
         }
 
         try {
-            final Class lfClass = Class.forName(lfClassName);
-            final Class themeClass = Class.forName(themeClassName);
+            final Class<?> lfClass = Class.forName(lfClassName);
+            final Class<?> themeClass = Class.forName(themeClassName);
 
             final LookAndFeel lookAndFeel = (LookAndFeel) lfClass.newInstance();
             final Object theme = themeClass.newInstance();
