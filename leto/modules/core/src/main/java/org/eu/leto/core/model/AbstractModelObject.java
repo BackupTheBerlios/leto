@@ -45,7 +45,7 @@ public abstract class AbstractModelObject implements ModelObject {
         if (obj == this) {
             return true;
         }
-        final Class clazz = getClass();
+        final Class<? extends AbstractModelObject> clazz = getClass();
         if (obj == null || !(clazz.isAssignableFrom(obj.getClass()))) {
             return false;
         }
