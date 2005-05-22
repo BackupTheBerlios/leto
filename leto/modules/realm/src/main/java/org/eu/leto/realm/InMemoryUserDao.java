@@ -15,6 +15,13 @@ public class InMemoryUserDao implements UserDao {
     private Map<Long, User> userMap = new HashMap<Long, User>(1);
 
 
+    public void setUsers(List<User> users) {
+        for (final User user : users) {
+            userMap.put(user.getUserId(), user);
+        }
+    }
+
+
     public User findByLogin(String login) {
         checkNullArgument("login", login);
         for (final User user : userMap.values()) {
