@@ -7,11 +7,14 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.lang.NullArgumentException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.eu.leto.core.AbstractImageCache;
 
 
 public class ApplicationImageCache extends AbstractImageCache {
     private final Application application;
+    private final Log log = LogFactory.getLog(getClass());
 
 
     public ApplicationImageCache(final Application application,
@@ -36,7 +39,8 @@ public class ApplicationImageCache extends AbstractImageCache {
 
             return ImageIO.read(url);
         } catch (Exception e) {
-            throw new RuntimeException("Error while loading image: " + key);
+            log.error("Error while loading image: " + key, e);
+            return null;
         }
     }
 }

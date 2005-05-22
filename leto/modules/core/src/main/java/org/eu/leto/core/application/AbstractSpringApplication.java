@@ -50,14 +50,15 @@ public abstract class AbstractSpringApplication extends AbstractApplication
 
     @Override
     public URL getResource(String path) {
+        if(path == null) {
+            return null;
+        }
         try {
             return applicationContext.getResource(path).getURL();
         } catch (Exception e) {
-            raiseException(e, "error.application.getResource");
+            log.error("Error while loading resource: " + path, e);
+            return null;
         }
-
-        throw new IllegalStateException(
-                "Unexpected exception: I think there's a bug");
     }
 
 
