@@ -30,6 +30,7 @@ public class SpringObjectRegister extends AbstractObjectRegister {
 
 
     @Override
+    @SuppressWarnings("unchecked")
     protected Object getBeanOfTypeInternal(Class clazz) {
         final Map<String, Object> map = (Map<String, Object>) applicationContext
                 .getBeansOfType(clazz);
