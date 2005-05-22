@@ -48,12 +48,14 @@ public abstract class AbstractHibernateDao<T extends ModelObject> extends
     }
 
 
+    @SuppressWarnings("unchecked")
     public T findById(Serializable id) {
         checkNullArgument("id", id);
         return (T) getHibernateTemplate().load(getModelClass(), id);
     }
 
 
+    @SuppressWarnings("unchecked")
     public List<T> findAll() {
         return (List<T>) getHibernateTemplate().loadAll(getModelClass());
     }
@@ -75,6 +77,7 @@ public abstract class AbstractHibernateDao<T extends ModelObject> extends
     }
 
 
+    @SuppressWarnings("unchecked")
     protected List<T> findByProperty(final String name, final Object value) {
         checkNullArgument("name", name);
         checkNullArgument("value", value);
