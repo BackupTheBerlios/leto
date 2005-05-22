@@ -1,6 +1,6 @@
 
 
-package org.eu.leto.core.util;
+package org.eu.leto.core.model.temporal;
 
 import java.io.Serializable;
 import java.util.Date;
