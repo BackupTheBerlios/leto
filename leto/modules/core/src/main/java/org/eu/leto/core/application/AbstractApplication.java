@@ -80,6 +80,11 @@ public abstract class AbstractApplication implements Application {
     }
 
 
+    public Object getBeanOfType(Class clazz) {
+        return getObjectRegister().getBeanOfType(clazz);
+    }
+
+
     public String getMessage(String key, Object... args) {
         return getMessageRegister().getMessage(key, args);
     }

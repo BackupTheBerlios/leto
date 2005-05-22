@@ -25,6 +25,9 @@ public interface Application {
     Object getBean(String name);
 
 
+    Object getBeanOfType(Class clazz);
+
+
     ObjectRegister getObjectRegister();
 
 
