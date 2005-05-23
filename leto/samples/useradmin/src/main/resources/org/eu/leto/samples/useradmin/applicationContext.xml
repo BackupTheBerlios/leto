@@ -18,6 +18,7 @@
     </bean>
   </list>
 </property>
+<property name="randomUsers"><value>true</value></property>
 </bean>
 
 
@@ -50,31 +51,7 @@
 </bean>
 
 
-<bean id="userDao" class="org.eu.leto.realm.InMemoryUserDao">
-<property name="users">
-  <list>
-    <bean class="org.eu.leto.realm.User">
-      <property name="userId"><value>1000</value></property>
-      <property name="login"><value>alex</value></property>
-      <property name="password"><value>changeme</value></property>
-      <property name="displayName"><value>Alexandre ROMAN</value></property>
-    </bean>
-    <bean class="org.eu.leto.realm.User">
-      <property name="userId"><value>1001</value></property>
-      <property name="login"><value>homer</value></property>
-      <property name="password"><value>donut</value></property>
-      <property name="displayName"><null/></property>
-      <property name="disabled"><value>true</value></property>
-    </bean>
-    <bean class="org.eu.leto.realm.User">
-      <property name="userId"><value>1002</value></property>
-      <property name="login"><value>bart</value></property>
-      <property name="password"><value>yo</value></property>
-      <property name="displayName"><value>Bart SIMPSONS</value></property>
-    </bean>
-  </list>
-</property>
-</bean>
+<bean id="userDao" class="org.eu.leto.realm.InMemoryUserDao"/>
 
 
 <bean id="userAdminModel" class="org.eu.leto.samples.useradmin.UserAdminModel"/>
