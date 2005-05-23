@@ -17,6 +17,7 @@ import org.apache.commons.lang.NullArgumentException;
 import org.apache.commons.lang.UnhandledException;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -92,6 +93,28 @@ public abstract class AbstractModelObject implements ModelObject {
         }
 
         return hashCodeBuilder.toHashCode();
+    }
+
+
+    @Override
+    public String toString() {
+        final ToStringBuilder toStringBuilder = new ToStringBuilder(this);
+        final Class superClazz = getClass().getSuperclass();
+        if (superClazz != null && !superClazz.equals(Object.class)
+                && !superClazz.equals(AbstractModelObject.class)) {
+            // the upper class is not Object nor AbstractModelObject
+            toStringBuilder.appendSuper(super.toString());
+        }
+
+        try {
+            for (final Field field : getValuableFields(getClass())) {
+                toStringBuilder.append(field.getName(), field.get(this));
+            }
+        } catch (Exception e) {
+            throw new UnhandledException(e);
+        }
+
+        return toStringBuilder.toString();
     }
 
 
