@@ -12,7 +12,7 @@
     <bean class="org.eu.leto.swing.JGoodiesApplicationConfigurer"/>
     <bean class="org.eu.leto.swing.SplashScreenApplicationConfigurer">
       <constructor-arg index="0">
-        <value>/org/eu/leto/samples/useradmin/splash.png</value>
+        <value>/org/eu/leto/samples/useradmin/images/splash.png</value>
       </constructor-arg>
       <constructor-arg index="1"><value>2</value></constructor-arg>
     </bean>
@@ -26,21 +26,57 @@
 <property name="basenames">
   <list>
     <value>org.eu.leto.core.resources</value>
+    <value>org.eu.leto.swing.resources</value>
     <value>org.eu.leto.samples.useradmin.resources</value>
   </list>
 </property>
+<property name="useCodeAsDefaultMessage"><value>true</value></property>
 </bean>
 
 
-<bean id="mainFrame" class="org.eu.leto.samples.useradmin.MainFrame">
+<bean id="mainFrame" class="org.eu.leto.samples.useradmin.swing.MainFrame">
 <constructor-arg index="0"><ref local="application"/></constructor-arg>
 </bean>
 
 
 <bean id="imageCache" class="org.eu.leto.core.application.ApplicationImageCache">
 <constructor-arg index="0"><ref local="application"/></constructor-arg>
-<constructor-arg index="1"><value>/org/eu/leto/samples/useradmin/</value></constructor-arg>
+<constructor-arg index="1"><value>/org/eu/leto/samples/useradmin/images/</value></constructor-arg>
 </bean>
+
+
+<bean id="componentFactory" class="org.eu.leto.swing.ComponentFactory">
+<constructor-arg index="0"><ref local="application"/></constructor-arg>
+</bean>
+
+
+<bean id="userDao" class="org.eu.leto.realm.InMemoryUserDao">
+<property name="users">
+  <list>
+    <bean class="org.eu.leto.realm.User">
+      <property name="userId"><value>1000</value></property>
+      <property name="login"><value>alex</value></property>
+      <property name="password"><value>changeme</value></property>
+      <property name="displayName"><value>Alexandre ROMAN</value></property>
+    </bean>
+    <bean class="org.eu.leto.realm.User">
+      <property name="userId"><value>1001</value></property>
+      <property name="login"><value>homer</value></property>
+      <property name="password"><value>donut</value></property>
+      <property name="displayName"><value>Homer SIMPSONS</value></property>
+    </bean>
+    <bean class="org.eu.leto.realm.User">
+      <property name="userId"><value>1002</value></property>
+      <property name="login"><value>bart</value></property>
+      <property name="password"><value>yo</value></property>
+      <property name="displayName"><value>Bart SIMPSONS</value></property>
+    </bean>
+  </list>
+</property>
+</bean>
+
+
+<bean id="userAdminModel" class="org.eu.leto.samples.useradmin.UserAdminModel"/>
 
 </beans>
 
