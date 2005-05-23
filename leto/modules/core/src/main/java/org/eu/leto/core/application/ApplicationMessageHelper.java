@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import org.apache.commons.lang.NullArgumentException;
+import org.eu.leto.core.ActionDescriptor;
 
 
 public class ApplicationMessageHelper {
@@ -32,8 +33,8 @@ public class ApplicationMessageHelper {
     public boolean showConfirmationMessage(Component parent, String msgKey,
             String titleKey, Object... args) {
         return JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(parent,
-                application.getMessage(msgKey, args), application
-                        .getMessage(titleKey), JOptionPane.YES_NO_OPTION);
+                application.getMessage(msgKey, args), getTitle(titleKey),
+                JOptionPane.YES_NO_OPTION);
     }
 
 
@@ -79,16 +80,15 @@ public class ApplicationMessageHelper {
         panel.add(scrollPane, BorderLayout.CENTER);
         panel.add(text, BorderLayout.NORTH);
 
-        JOptionPane.showMessageDialog(parent, panel, application
-                .getMessage(titleKey), JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(parent, panel, getTitle(titleKey),
+                JOptionPane.ERROR_MESSAGE);
     }
 
 
     public void showInformationMessage(Component parent, String msgKey,
             String titleKey, Object... args) {
         JOptionPane.showMessageDialog(parent, application.getMessage(msgKey,
-                args), application.getMessage(titleKey),
-                JOptionPane.INFORMATION_MESSAGE);
+                args), getTitle(titleKey), JOptionPane.INFORMATION_MESSAGE);
     }
 
 
@@ -107,5 +107,12 @@ public class ApplicationMessageHelper {
         }
 
         return stackTraceElementList;
+    }
+
+
+    private String getTitle(String titleKey) {
+        final String title = application.getMessage(titleKey);
+
+        return ActionDescriptor.parse(title).getLabel();
     }
 }
