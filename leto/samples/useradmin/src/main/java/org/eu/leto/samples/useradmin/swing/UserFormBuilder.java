@@ -16,6 +16,7 @@ public class UserFormBuilder extends FormBuilder {
         final int columns = 20;
 
         addSeparator("user");
+        addTextField("user.displayName").setColumns(columns);
         addTextField("user.login").setColumns(columns);
         addPasswordField("user.password").setColumns(columns);
         addCheckbox("user.disabled");
