@@ -64,7 +64,7 @@ public class UserAdminPanel extends AbstractPanel {
 
     private JPanel createMainPanel() {
         assert userList != null;
-        
+
         final JScrollPane userListScrollPane = new JScrollPane(userList,
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -72,7 +72,8 @@ public class UserAdminPanel extends AbstractPanel {
                 BorderFactory.createEmptyBorder(5, 5, 5, 5), userListScrollPane
                         .getBorder()));
 
-        final JTabbedPane tabbedPane = new JTabbedPane();
+        final JTabbedPane tabbedPane = getServices().getComponentFactory()
+                .createTabbedPane();
         tabbedPane.addTab(getApplication().getMessage("userTab"),
                 userListScrollPane);
 
@@ -84,8 +85,8 @@ public class UserAdminPanel extends AbstractPanel {
 
 
     private JButton createToolBarButton(Command command) {
-        final JButton button = new JButton(getApplicationServices()
-                .getComponentFactory().createAction(command));
+        final JButton button = new JButton(getServices().getComponentFactory()
+                .createAction(command));
         button.setText(null);
 
         return button;
@@ -112,8 +113,8 @@ public class UserAdminPanel extends AbstractPanel {
         topPanel.add(toolBar, gc);
 
         ++gc.gridx;
-        final JLabel searchIcon = new JLabel(new ImageIcon(
-                getApplicationServices().getImageCache().getImage(
+        final JLabel searchIcon = new JLabel(new ImageIcon(getServices()
+                .getImageCache().getImage(
                         getApplication().getMessage("search.icon"))));
         searchIcon.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
         topPanel.add(searchIcon, gc);
