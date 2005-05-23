@@ -14,6 +14,15 @@ public interface MessageRegister {
 
 
     /**
+     * Resolve a message and convert it to a boolean.
+     * 
+     * @param key key to lookup
+     * @return the resolved boolean, or false
+     */
+    boolean getBooleanMessage(String key);
+
+
+    /**
      * Resolve a message, with one parameter. Parameters look like "{0}, {1},
      * etc..."
      * 
