@@ -93,10 +93,9 @@ public abstract class AbstractApplication implements Application {
     public void setUseMessageHelper(boolean b) {
         if (!b) {
             applicationMessageHelper = null;
-        } else
-            if (applicationMessageHelper == null) {
-                applicationMessageHelper = new ApplicationMessageHelper(this);
-            }
+        } else if (applicationMessageHelper == null) {
+            applicationMessageHelper = new ApplicationMessageHelper(this);
+        }
     }
 
 
@@ -138,13 +137,6 @@ public abstract class AbstractApplication implements Application {
 
     public final void raiseException(Exception e, String key, Object... args) {
         final String msg;
-        if (getMessageRegister() == null) {
-            msg = key;
-        } else {
-            // we construct a localized message
-            msg = getMessageRegister().getMessage(key, args);
-        }
-
         final ApplicationException exc = new ApplicationException(this, e, key,
                 args);
         if (applicationMessageHelper != null) {
