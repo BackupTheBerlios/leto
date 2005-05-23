@@ -17,6 +17,12 @@
       <version>SNAPSHOT</version>
       <url>http://leto.eu.org</url>
     </dependency>
+    <dependency>
+      <groupId>leto</groupId>
+      <artifactId>leto-form</artifactId>
+      <version>SNAPSHOT</version>
+      <url>http://leto.eu.org</url>
+    </dependency>
   </dependencies>
 </project>
 
