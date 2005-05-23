@@ -6,9 +6,11 @@ import java.awt.Image;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.GrayFilter;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JList;
+import javax.swing.UIManager;
 
 import org.apache.commons.lang.NullArgumentException;
 import org.apache.commons.lang.StringUtils;
@@ -19,6 +21,7 @@ import org.eu.leto.realm.User;
 
 public class UserListCellRenderer extends DefaultListCellRenderer {
     private final Icon userIcon;
+    private final Icon disabledUserIcon;
     private final String disabledAccount;
     private final String anonymous;
 
@@ -34,11 +37,23 @@ public class UserListCellRenderer extends DefaultListCellRenderer {
                     .getMessage("user.icon"));
             if (image != null) {
                 this.userIcon = new ImageIcon(image);
+
+                if (this.userIcon instanceof ImageIcon) {
+                    // taken from:
+                    // http://javaalmanac.com/egs/java.awt/GrayIcon.html
+                    this.disabledUserIcon = new ImageIcon(GrayFilter
+                            .createDisabledImage(((ImageIcon) userIcon)
+                                    .getImage()));
+                } else {
+                    this.disabledUserIcon = this.userIcon;
+                }
             } else {
                 this.userIcon = null;
+                this.disabledUserIcon = null;
             }
         } else {
             this.userIcon = null;
+            this.disabledUserIcon = null;
         }
 
         this.disabledAccount = application.getMessage("user.account.disabled");
@@ -60,14 +75,15 @@ public class UserListCellRenderer extends DefaultListCellRenderer {
         } else {
             text.append(anonymous);
         }
-        text.append("</b>");
+        text.append("</b><br>").append(user.getLogin());
         if (Boolean.TRUE.equals(user.getDisabled())) {
-            text.append(" <i>(").append(disabledAccount).append(")</i>");
+            setForeground(UIManager.getColor("Label.disabledForeground"));
+            setIcon(disabledUserIcon);
+        } else {
+            setIcon(userIcon);
         }
-        text.append("<br>").append(user.getLogin());
 
         setText(text.toString());
-        setIcon(userIcon);
         setBorder(BorderFactory.createEmptyBorder(2, 0, 2, 0));
 
         return this;
