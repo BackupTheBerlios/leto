@@ -138,7 +138,7 @@ public class FormBuilder {
     }
 
 
-    public final JComponent createControl() {
+    public final JComponent createComponent() {
         final JPanel panel = new JPanel(new BorderLayout());
         panel.add(formBuilder.getPanel());
 
