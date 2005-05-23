@@ -101,7 +101,7 @@ public class ActionDescriptor {
 
         matcher = PATTERN_4.matcher(value);
         if (matcher.matches()) {
-            cd.setLabel(matcher.group(1));
+            fillLabelAndMnemonic(matcher.group(1), cd);
             
             return cd;
         }
