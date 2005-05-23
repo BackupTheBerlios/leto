@@ -63,7 +63,8 @@
       <property name="userId"><value>1001</value></property>
       <property name="login"><value>homer</value></property>
       <property name="password"><value>donut</value></property>
-      <property name="displayName"><value>Homer SIMPSONS</value></property>
+      <property name="displayName"><null/></property>
+      <property name="disabled"><value>true</value></property>
     </bean>
     <bean class="org.eu.leto.realm.User">
       <property name="userId"><value>1002</value></property>
