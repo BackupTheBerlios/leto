@@ -11,6 +11,7 @@ import org.eu.leto.core.command.AbstractCommand;
 import org.eu.leto.realm.User;
 import org.eu.leto.realm.UserDao;
 import org.eu.leto.samples.useradmin.UserAdminModel;
+import org.eu.leto.samples.useradmin.swing.MainFrame;
 
 
 public class DeleteUserCommand extends AbstractCommand {
@@ -22,6 +23,14 @@ public class DeleteUserCommand extends AbstractCommand {
     @Override
     @SuppressWarnings("unchecked")
     protected void doExecute() throws Exception {
+        final MainFrame owner = (MainFrame) getApplication().getBeanOfType(
+                MainFrame.class);
+
+        if (!getApplication().getMessageHelper().showConfirmationMessage(owner,
+                "message.user.delete", "action.delete")) {
+            return;
+        }
+
         final UserAdminModel model = (UserAdminModel) getApplication()
                 .getBeanOfType(UserAdminModel.class);
 
