@@ -11,9 +11,17 @@
   <package>org.eu.leto.samples.useradmin</package>
 
   <dependencies>
+    <!-- Leto -->
+
     <dependency>
       <groupId>leto</groupId>
       <artifactId>leto-core</artifactId>
+      <version>SNAPSHOT</version>
+      <url>http://leto.eu.org</url>
+    </dependency>
+    <dependency>
+      <groupId>leto</groupId>
+      <artifactId>leto-form</artifactId>
       <version>SNAPSHOT</version>
       <url>http://leto.eu.org</url>
     </dependency>
@@ -28,6 +36,15 @@
       <artifactId>leto-swing</artifactId>
       <version>SNAPSHOT</version>
       <url>http://leto.eu.org</url>
+    </dependency>
+
+   <!-- Glazed Lists -->
+
+    <dependency>
+      <groupId>glazedlists</groupId>
+      <artifactId>glazedlists</artifactId>
+      <version>0.9.6</version>
+      <url>http://publicobject.com/glazedlists/</url>
     </dependency>
   </dependencies>
 </project>
