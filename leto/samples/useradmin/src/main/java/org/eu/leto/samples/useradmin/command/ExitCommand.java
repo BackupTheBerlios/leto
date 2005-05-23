@@ -1,4 +1,4 @@
-package org.eu.leto.samples.useradmin;
+package org.eu.leto.samples.useradmin.command;
 
 
 import org.eu.leto.core.application.Application;
