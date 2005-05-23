@@ -19,6 +19,7 @@ public class ActionDescriptor {
             + KEYSTROKE_HINT + "(.*)");
     private static final Pattern PATTERN_3 = Pattern.compile("(.*)"
             + DESCRIPTION_HINT + "(.*)");
+    private static final Pattern PATTERN_4 = Pattern.compile("(.*)");
 
     private String label;
     private char mnemonic;
@@ -95,6 +96,13 @@ public class ActionDescriptor {
             fillLabelAndMnemonic(matcher.group(1), cd);
             cd.setDescription(matcher.group(2));
 
+            return cd;
+        }
+
+        matcher = PATTERN_4.matcher(value);
+        if (matcher.matches()) {
+            cd.setLabel(matcher.group(1));
+            
             return cd;
         }
 
