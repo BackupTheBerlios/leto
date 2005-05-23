@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Id$
+-->
+<project>
+  <extend>${basedir}/../../project.xml</extend>
+  <pomVersion>3</pomVersion>
+  <id>leto-form</id>
+  <name>Leto form</name>
+
+  <package>org.eu.leto.form</package>
+
+  <dependencies>
+    <dependency>
+      <groupId>leto</groupId>
+      <artifactId>leto-core</artifactId>
+      <version>SNAPSHOT</version>
+      <url>http://leto.eu.org</url>
+    </dependency>
+  </dependencies>
+</project>
+
