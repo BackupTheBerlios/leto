@@ -19,9 +19,21 @@ public abstract class AbstractMessageRegister implements MessageRegister {
         try {
             return Integer.parseInt(msg);
         } catch (Exception e) {
-            throw new RuntimeException("Error while parsing message with key '"
-                    + key + "': " + msg, e);
+            log.error("Error while parsing message with key '" + key + "': "
+                    + msg, e);
+            return 0;
         }
+    }
+
+
+    public final boolean getBooleanMessage(String key) {
+        final String msg = getMessage(key);
+        if (msg == null) {
+            return false;
+        }
+
+        return "1".equals(msg) || "true".equalsIgnoreCase(msg)
+                || "on".equalsIgnoreCase(msg);
     }
 
 
