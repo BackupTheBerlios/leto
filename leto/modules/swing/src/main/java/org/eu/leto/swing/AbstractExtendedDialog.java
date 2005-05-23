@@ -36,6 +36,7 @@ public abstract class AbstractExtendedDialog extends AbstractDialog {
 
     private final Log log = LogFactory.getLog(getClass());
     private final Buttons buttons;
+    private boolean initDone = false;
 
 
     public AbstractExtendedDialog(final Application application,
@@ -52,8 +53,6 @@ public abstract class AbstractExtendedDialog extends AbstractDialog {
             throw new NullArgumentException("buttons");
         }
         this.buttons = buttons;
-
-        init();
     }
 
 
@@ -212,8 +211,33 @@ public abstract class AbstractExtendedDialog extends AbstractDialog {
         panel.add(createButtons(), BorderLayout.SOUTH);
 
         setContentPane(panel);
-        pack();
+        super.pack();
         setLocationRelativeTo(getOwner());
+        
+        initDone = true;
+    }
+
+
+    @Override
+    public final void pack() {
+        // we want to call init() in the very last moment:
+        // that's why we may call init() from here, only one time
+        if (!initDone) {
+            initDone = true;
+            init();
+        }
+        super.pack();
+    }
+
+
+    @Override
+    public final void setVisible(boolean b) {
+        // same note about init() than the one in pack()
+        if (!initDone) {
+            initDone = true;
+            init();
+        }
+        super.setVisible(b);
     }
 
     private class ApplyCommand extends AbstractCommand {
