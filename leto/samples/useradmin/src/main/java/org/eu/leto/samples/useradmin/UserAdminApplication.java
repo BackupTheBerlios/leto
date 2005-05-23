@@ -25,7 +25,7 @@ public class UserAdminApplication extends AbstractSpringApplication {
 
     @Override
     protected void onStart() throws Exception {
-        final JFrame frame = (JFrame) getObjectRegister().getBean("mainFrame");
+        final JFrame frame = (JFrame) getBean("mainFrame");
         frame.setVisible(true);
     }
 }
