@@ -4,6 +4,8 @@ package org.eu.leto.samples.useradmin.swing;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -55,6 +57,15 @@ public class UserAdminPanel extends AbstractPanel {
         userList = new JList(new EventListModel(model.userFilteredList));
         userList.setSelectionModel(model.userListSelectionModel);
         userList.setCellRenderer(new UserListCellRenderer(getApplication()));
+        userList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() < 2) {
+                    return;
+                }
+                new EditUserCommand(getApplication()).execute();
+            }
+        });
 
         setLayout(new BorderLayout());
         add(createMainPanel(), BorderLayout.CENTER);
