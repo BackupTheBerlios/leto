@@ -19,6 +19,8 @@ import org.eu.leto.realm.User;
 
 public class UserListCellRenderer extends DefaultListCellRenderer {
     private final Icon userIcon;
+    private final String disabledAccount;
+    private final String anonymous;
 
 
     public UserListCellRenderer(final Application application) {
@@ -38,6 +40,9 @@ public class UserListCellRenderer extends DefaultListCellRenderer {
         } else {
             this.userIcon = null;
         }
+
+        this.disabledAccount = application.getMessage("user.account.disabled");
+        this.anonymous = application.getMessage("user.displayName.none");
     }
 
 
@@ -49,11 +54,17 @@ public class UserListCellRenderer extends DefaultListCellRenderer {
 
         final User user = (User) value;
 
-        final StringBuilder text = new StringBuilder("<html>");
+        final StringBuilder text = new StringBuilder("<html><b>");
         if (!StringUtils.isBlank(user.getDisplayName())) {
-            text.append("<b>").append(user.getDisplayName()).append("</b><br>");
+            text.append(user.getDisplayName());
+        } else {
+            text.append(anonymous);
         }
-        text.append(user.getLogin());
+        text.append("</b>");
+        if (Boolean.TRUE.equals(user.getDisabled())) {
+            text.append(" <i>(").append(disabledAccount).append(")</i>");
+        }
+        text.append("<br>").append(user.getLogin());
 
         setText(text.toString());
         setIcon(userIcon);
