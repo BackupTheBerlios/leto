@@ -26,11 +26,11 @@
 <property name="basenames">
   <list>
     <value>org.eu.leto.core.resources</value>
+    <value>org.eu.leto.form.resources</value>
     <value>org.eu.leto.swing.resources</value>
     <value>org.eu.leto.samples.useradmin.resources</value>
   </list>
 </property>
-<property name="useCodeAsDefaultMessage"><value>true</value></property>
 </bean>
 
 
