@@ -45,11 +45,12 @@ public class ApplicationException extends RuntimeException {
     }
 
 
-    public String getMessage() {
+    @Override
+    public String getLocalizedMessage() {
         if (key != null) {
-            return application.getMessageRegister().getMessage(key, arguments);
+            return application.getMessage(key, arguments);
         }
 
-        return super.getMessage();
+        return super.getLocalizedMessage();
     }
 }
