@@ -50,6 +50,11 @@ public abstract class AbstractApplication implements Application {
     }
 
 
+    public ApplicationMessageHelper getMessageHelper() {
+        return applicationMessageHelper;
+    }
+
+
     public MessageRegister getMessageRegister() {
         return messageRegister;
     }

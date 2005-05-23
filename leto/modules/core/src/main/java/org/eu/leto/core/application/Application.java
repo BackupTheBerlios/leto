@@ -16,6 +16,9 @@ public interface Application {
     String getId();
 
 
+    ApplicationMessageHelper getMessageHelper();
+
+
     MessageRegister getMessageRegister();
 
 
