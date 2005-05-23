@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.text.JTextComponent;
@@ -151,6 +152,11 @@ public class ComponentFactory {
         configureComponentState(formModel, path, textField);
 
         return textField;
+    }
+
+
+    public JTabbedPane createTabbedPane() {
+        return new JTabbedPane();
     }
 
 
