@@ -9,7 +9,7 @@ import org.eu.leto.core.application.Application;
 
 public class AbstractPanel extends JPanel {
     private final Application application;
-    private final SwingServices applicationServices;
+    private final SwingServices services;
 
 
     public AbstractPanel(final Application application) {
@@ -17,12 +17,12 @@ public class AbstractPanel extends JPanel {
             throw new NullArgumentException("application");
         }
         this.application = application;
-        this.applicationServices = new SwingServices(application);
+        this.services = new SwingServices(application);
     }
 
 
-    protected final SwingServices getApplicationServices() {
-        return applicationServices;
+    protected final SwingServices getServices() {
+        return services;
     }
 
 
