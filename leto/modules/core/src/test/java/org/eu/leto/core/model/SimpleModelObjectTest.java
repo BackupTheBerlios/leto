@@ -10,7 +10,7 @@ import java.util.GregorianCalendar;
 import junit.framework.TestCase;
 
 
-public class AbstractModelObjectTest extends TestCase {
+public class SimpleModelObjectTest extends TestCase {
     public void testEqualsHashCode() {
         final SimpleModelObject smo1 = new SimpleModelObject("johndoe",
                 createDate(1982, Calendar.FEBRUARY, 7));
