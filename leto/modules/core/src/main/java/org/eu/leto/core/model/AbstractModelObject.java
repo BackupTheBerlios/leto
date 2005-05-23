@@ -6,7 +6,9 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Id;
 import javax.persistence.Transient;
@@ -21,17 +23,18 @@ import org.apache.commons.logging.LogFactory;
 
 public abstract class AbstractModelObject implements ModelObject {
     private final transient Log log = LogFactory.getLog(getClass());
-    private static transient List<Field> cacheValuableFields;
+    private static transient Map<Class<? extends ModelObject>, List<Field>> cacheValuableFields = new HashMap<Class<? extends ModelObject>, List<Field>>();
 
 
-    protected void checkNullArgument(String name, Object value) {
+    protected final void checkNullArgument(String name, Object value) {
         if (value == null) {
             throw new NullArgumentException(name);
         }
     }
 
 
-    protected void checkNullOrEmptyArgument(String name, CharSequence value) {
+    protected final void checkNullOrEmptyArgument(String name,
+            CharSequence value) {
         checkNullArgument(name, value);
         if (value.length() == 0) {
             throw new IllegalStateException("Argument '" + name
@@ -59,7 +62,7 @@ public abstract class AbstractModelObject implements ModelObject {
         }
 
         try {
-            for (final Field field : getValuableFields()) {
+            for (final Field field : getValuableFields(getClass())) {
                 equalsBuilder.append(field.get(this), field.get(obj));
             }
         } catch (Exception e) {
@@ -81,7 +84,7 @@ public abstract class AbstractModelObject implements ModelObject {
         }
 
         try {
-            for (final Field field : getValuableFields()) {
+            for (final Field field : getValuableFields(getClass())) {
                 hashCodeBuilder.append(field.get(this));
             }
         } catch (Exception e) {
@@ -93,10 +96,13 @@ public abstract class AbstractModelObject implements ModelObject {
 
 
     @Transient
-    private List<Field> getValuableFields() {
+    private List<Field> getValuableFields(Class<? extends ModelObject> clazz) {
         synchronized (this) {
-            if (cacheValuableFields != null) {
-                return cacheValuableFields;
+            final List<Field> fields = cacheValuableFields.get(clazz);
+
+            // we reuse the already computed fields for this class
+            if (fields != null) {
+                return fields;
             }
         }
 
@@ -143,7 +149,8 @@ public abstract class AbstractModelObject implements ModelObject {
         }
 
         synchronized (this) {
-            cacheValuableFields = fields;
+            // we cache the fields for a future use
+            cacheValuableFields.put(clazz, fields);
         }
 
         return fields;
