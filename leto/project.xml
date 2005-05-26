@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    $Id: project.xml,v 1.4 2005/05/23 16:33:40 romale Exp $
+    $Id: project.xml,v 1.5 2005/05/26 16:20:35 romale Exp $
 -->
 <project>
   <pomVersion>3</pomVersion>
@@ -58,7 +58,7 @@
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
-      <version>1.2.8</version>
+      <version>1.2.9</version>
       <url>http://logging.apache.org/log4j/</url>
     </dependency>
 
