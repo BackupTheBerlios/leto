@@ -7,9 +7,9 @@ import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -95,23 +95,24 @@ public class UserAdminPanel extends AbstractPanel {
     }
 
 
-    private JButton createToolBarButton(Command command) {
-        final JButton button = new JButton(getServices().getComponentFactory()
-                .createAction(command));
-        button.setText(null);
+    private Action createActionToolBar(Command command) {
+        final Action action = getServices().getComponentFactory().createAction(
+                command);
+        action.putValue(Action.NAME, null);
 
-        return button;
+        return action;
     }
 
 
     private JPanel createTopPanel() {
-        final JToolBar toolBar = new JToolBar();
+        final JToolBar toolBar = getServices().getComponentFactory()
+                .createToolBar();
         toolBar.setFloatable(false);
-        toolBar.add(createToolBarButton(new NewUserCommand(getApplication())));
-        toolBar.add(createToolBarButton(new EditUserCommand(getApplication())));
+        toolBar.add(createActionToolBar(new NewUserCommand(getApplication())));
+        toolBar.add(createActionToolBar(new EditUserCommand(getApplication())));
         toolBar
-                .add(createToolBarButton(new DeleteUserCommand(getApplication())));
-        toolBar.add(createToolBarButton(new ReloadUserListCommand(
+                .add(createActionToolBar(new DeleteUserCommand(getApplication())));
+        toolBar.add(createActionToolBar(new ReloadUserListCommand(
                 getApplication())));
         toolBar.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
 
