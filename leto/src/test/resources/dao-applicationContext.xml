@@ -2,7 +2,7 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
     "http://www.springframework.org/dtd/spring-beans.dtd">
 <!--
-    $Id: dao-applicationContext.xml,v 1.1 2005/05/23 12:37:10 romale Exp $
+    $Id: dao-applicationContext.xml,v 1.2 2005/05/27 09:59:20 romale Exp $
 -->
 <beans default-lazy-init="true">
 
@@ -32,6 +32,10 @@
     <prop key="hibernate.show_sql">${jdbc.hibernate.showSQL}</prop>
     <prop key="hibernate.hbm2ddl.auto">${jdbc.hibernate.hbm2ddl}</prop>
     <prop key="hibernate.jdbc.batch_size">${jdbc.hibernate.batchSize}</prop>
+    <!-- fix some troubles with transactions
+         http://jroller.com/page/raible?anchor=read_only_connection_issue_with
+    -->
+    <prop key="hibernate.connection.release_mode">on_close</prop>
   </props>
 </property>
 <property name="dataSource"><ref local="dataSource"/></property>
