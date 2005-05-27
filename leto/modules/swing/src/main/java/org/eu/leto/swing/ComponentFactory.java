@@ -12,7 +12,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.text.JTextComponent;
 
@@ -157,6 +159,16 @@ public class ComponentFactory {
 
     public JTabbedPane createTabbedPane() {
         return new JTabbedPane();
+    }
+
+
+    public JToolBar createToolBar() {
+        return new PatchedJToolBar();
+    }
+
+
+    public JTable createTable() {
+        return new PatchedJTable();
     }
 
 
