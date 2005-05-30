@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    $Id: maven.xml,v 1.1 2005/05/13 11:17:57 romale Exp $
+    $Id: maven.xml,v 1.2 2005/05/30 09:51:44 romale Exp $
 -->
 <project xmlns:j="jelly:core" xmlns:util="jelly:util"
   xmlns:ant="jelly:ant" default="run">
