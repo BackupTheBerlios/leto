@@ -7,14 +7,20 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
@@ -210,10 +216,23 @@ public abstract class AbstractExtendedDialog extends AbstractDialog {
         panel.add(contentPanel, BorderLayout.CENTER);
         panel.add(createButtons(), BorderLayout.SOUTH);
 
+        // register the "escape" key to "cancel" the dialog
+        final String cancelActionCommand = "_cancel";
+        final InputMap inputMap = getRootPane().getInputMap(
+                JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+                cancelActionCommand);
+        final ActionMap actionMap = getRootPane().getActionMap();
+        actionMap.put(cancelActionCommand, new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                onCancel();
+            }
+        });
+
         setContentPane(panel);
         super.pack();
         setLocationRelativeTo(getOwner());
-        
+
         initDone = true;
     }
 
