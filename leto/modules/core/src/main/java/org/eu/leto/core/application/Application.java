@@ -56,4 +56,7 @@ public interface Application {
 
 
     void stop();
+
+
+    void setArguments(String... args);
 }

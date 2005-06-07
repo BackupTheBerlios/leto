@@ -19,6 +19,7 @@ public abstract class AbstractApplication implements Application {
     private ObjectRegister objectRegister;
     private final Preferences preferences;
     private final String id;
+    private String[] arguments = new String[0];
     private ApplicationMessageHelper applicationMessageHelper;
     private List<ApplicationConfigurer> applicationConfigurers = new ArrayList<ApplicationConfigurer>();
 
@@ -176,6 +177,16 @@ public abstract class AbstractApplication implements Application {
 
     public void setMessageRegister(MessageRegister messageRegister) {
         this.messageRegister = messageRegister;
+    }
+
+
+    public void setArguments(String... args) {
+        this.arguments = args;
+    }
+
+
+    protected String[] getArguments() {
+        return arguments;
     }
 
 
