@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    $Id: project.xml,v 1.7 2005/05/30 09:44:16 romale Exp $
+    $Id: project.xml,v 1.8 2005/06/21 08:48:57 romale Exp $
 -->
 <project>
   <pomVersion>3</pomVersion>
@@ -46,7 +46,7 @@
     <dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
-      <version>2.0</version>
+      <version>2.1</version>
       <url>http://jakarta.apache.org/commons/</url>
     </dependency>
     <dependency>
